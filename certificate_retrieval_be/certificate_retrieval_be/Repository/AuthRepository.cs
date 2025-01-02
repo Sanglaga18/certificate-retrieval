@@ -127,7 +127,8 @@ namespace certificate_retrieval_be.Repository
         public string GenerateJwtToken(Users user, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
+            var secretKey = Environment.GetEnvironmentVariable("API_SECRET");
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
