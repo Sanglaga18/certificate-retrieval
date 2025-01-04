@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const examResultApi = createApi({
   reducerPath: "examResultApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://localhost:7112/api/",
+    baseUrl: import.meta.env.VITE_BASE_URL,
   }),
   tagTypes: ["Exam-Results"],
   endpoints: (builder) => ({

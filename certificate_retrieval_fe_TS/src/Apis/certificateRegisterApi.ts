@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const certificateRegisterApi = createApi({
   reducerPath: "certificateRegisterApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://localhost:7112/api/",
+    baseUrl: import.meta.env.VITE_BASE_URL,
   }),
   tagTypes: ["Certificate-Register"],
   endpoints: (builder) => ({

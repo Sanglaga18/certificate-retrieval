@@ -252,7 +252,7 @@ namespace certificate_retrieval_be.Controllers
                 diplomaNumber = Uri.UnescapeDataString(diplomaNumber);
 
                 // Kiểm tra nếu không tìm thấy Diploma
-                if (await _diplomaRepository.DiplomaExist(diplomaNumber))
+                if (!await _diplomaRepository.DiplomaExist(diplomaNumber))
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     _response.IsSuccess = false;
