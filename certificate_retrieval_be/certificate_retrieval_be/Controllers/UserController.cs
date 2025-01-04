@@ -2,6 +2,8 @@
 using certificate_retrieval_be.Interfaces;
 using certificate_retrieval_be.Models;
 using certificate_retrieval_be.Models.Dto;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -41,6 +44,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{userID}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetUserById(int userID)
         {
             try
@@ -68,6 +72,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("GetUsernameByUserId")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetUsernameByUserId(int userId)
         {
             try
@@ -89,6 +94,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Post([FromBody] UserCreateDTO model)
         {
             try
@@ -109,6 +115,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Update(int id, [FromBody] UserUpdateDTO userUpdateDTO)
         {
             try
@@ -128,6 +135,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("resetpassword/{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> ResetPassword(int id)
         {
             try
@@ -165,6 +173,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("changepassword/{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePasswordDTO changePasswordDTO)
         {
             try

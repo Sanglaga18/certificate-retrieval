@@ -2,6 +2,8 @@
 using certificate_retrieval_be.Models;
 using certificate_retrieval_be.Models.Dto;
 using certificate_retrieval_be.Repository.IRepository;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -21,6 +23,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetAllStudents()
         {
             try
@@ -40,6 +43,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{studentID}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetStudentById(string studentID)
         {
             try
@@ -69,6 +73,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> UpdateStudent(string id, [FromForm] StudentsUpdateDTO studentUpdateDTO)
         {
             if (id != studentUpdateDTO.StudentID)

@@ -3,6 +3,13 @@ const enrollmentApi = createApi({
   reducerPath: "enrollmentApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URL,
+    prepareHeaders: (headers: Headers) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        headers.append("Authorization", "Bearer " + token);
+      }
+      return headers;
+    },
   }),
   tagTypes: ["Enrollment"],
   endpoints: (builder) => ({

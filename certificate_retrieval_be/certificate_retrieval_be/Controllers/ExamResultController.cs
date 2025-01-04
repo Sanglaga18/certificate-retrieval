@@ -7,6 +7,8 @@ using certificate_retrieval_be.Models.Dto;
 using certificate_retrieval_be.Repository.IRepository;
 using certificate_retrieval_be.Interfaces;
 using certificate_retrieval_be.Repository;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 
 namespace certificate_retrieval_be.Controllers
 {
@@ -25,6 +27,7 @@ namespace certificate_retrieval_be.Controllers
 
         // GET: api/exam-results
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetAll()
         {
             _response.Result = await _examResultRepository.GetAll();
@@ -35,6 +38,7 @@ namespace certificate_retrieval_be.Controllers
 
         // GET: api/exam-results/{id}
         [HttpGet("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetById(int id)
         {
             var examResult = await _examResultRepository.GetById(id);
@@ -53,6 +57,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("student-info/{resultID:int}")]
+        [Authorize]
         public async Task<IActionResult> GetStudentInfoByExamResultId(int resultID)
         {
             // Lấy thông tin ExamResult
@@ -83,6 +88,7 @@ namespace certificate_retrieval_be.Controllers
 
         // POST: api/exam-results
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Post([FromBody] ExamResultsCreateDTO model)
         {
             if (model == null)
@@ -119,6 +125,7 @@ namespace certificate_retrieval_be.Controllers
 
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Put(int id, [FromBody] ExamResultsUpdateDTO model)
         {
             if (id != model.ResultID)
@@ -163,6 +170,7 @@ namespace certificate_retrieval_be.Controllers
 
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Delete(int id)
         {
             try

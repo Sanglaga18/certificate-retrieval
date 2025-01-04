@@ -1,6 +1,8 @@
 ﻿using certificate_retrieval_be.Models;
 using certificate_retrieval_be.Models.Dto;
 using certificate_retrieval_be.Repository.IRepository;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -20,6 +22,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetAll()
         {
             _response.Result = await _enrollmentRepository.GetAll();
@@ -29,6 +32,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetById(int id)
         {
             var enrollment = await _enrollmentRepository.GetById(id);
@@ -47,6 +51,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("student-info/{enrollmentId:int}")]
+        [Authorize]
         public async Task<IActionResult> GetStudentInfoByEnrollmentId(int enrollmentId)
         {
             // Lấy thông tin Enrollment
@@ -76,6 +81,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> CreateEnrollment([FromBody] EnrollmentsCreateDTO model)
         {
             if (model == null)
@@ -111,6 +117,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> UpdateEnrollment(int id, [FromBody] EnrollmentsUpdateDTO updateDto)
         {
             if (id != updateDto.EnrollmentID)
@@ -154,6 +161,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> DeleteEnrollment(int id)
         {
             try

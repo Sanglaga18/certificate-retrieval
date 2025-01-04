@@ -38,7 +38,7 @@ function DiplomaList() {
               <div className="col">Ngày cấp</div>
               <div className="col">Hiệu lực</div>
               <div className="col">Tổ chức cấp</div>
-              <div className="col">Mã đăng ký</div>
+              <div className="col">Mã kết quả</div>
               <div className="col">Mô tả</div>
               <div className="col">Hành động</div>
             </div>

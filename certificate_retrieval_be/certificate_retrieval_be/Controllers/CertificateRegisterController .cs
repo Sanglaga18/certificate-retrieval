@@ -1,6 +1,8 @@
 ﻿using certificate_retrieval_be.Data;
 using certificate_retrieval_be.Interfaces;
 using certificate_retrieval_be.Models;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -22,6 +24,7 @@ namespace certificate_retrieval_be.Controllers
 
         // GET: api/certificate-register
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -42,6 +45,7 @@ namespace certificate_retrieval_be.Controllers
 
         // GET: api/certificate-register/{id}
         [HttpGet("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -70,6 +74,7 @@ namespace certificate_retrieval_be.Controllers
 
         // POST: api/certificate-register
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Post([FromBody] CertificateRegister model)
         {
             try
@@ -98,6 +103,7 @@ namespace certificate_retrieval_be.Controllers
 
         // PUT: api/certificate-register/{id}
         [HttpPut("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Put(int id, [FromBody] CertificateRegister model)
         {
             try
@@ -134,6 +140,7 @@ namespace certificate_retrieval_be.Controllers
 
         // DELETE: api/certificate-register/{id}
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Delete(int id)
         {
             try

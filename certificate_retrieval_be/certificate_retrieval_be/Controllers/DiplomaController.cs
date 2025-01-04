@@ -1,6 +1,8 @@
 ﻿using certificate_retrieval_be.Interfaces;
 using certificate_retrieval_be.Models;
 using certificate_retrieval_be.Models.Dto;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -20,6 +22,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll(int? userID = null, string? searchString = null)
         {
             try
@@ -59,6 +62,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{diplomaNumber}")]
+        [Authorize]
         public async Task<IActionResult> GetById(string diplomaNumber, int? userID = null)
         {
             try
@@ -113,6 +117,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Post([FromForm] DiplomaCreateDTO model)
         {
             try
@@ -177,6 +182,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("{diplomaNumber}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> UpdateDiploma(string diplomaNumber, [FromForm] DiplomaUpdateDTO model)
         {
             diplomaNumber = Uri.UnescapeDataString(diplomaNumber);
@@ -245,6 +251,7 @@ namespace certificate_retrieval_be.Controllers
 
 
         [HttpDelete("{diplomaNumber}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> DeleteDiploma(string diplomaNumber)
         {
             try

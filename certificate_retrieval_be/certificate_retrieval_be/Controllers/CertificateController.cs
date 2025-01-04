@@ -3,6 +3,8 @@ using System.Net;
 using certificate_retrieval_be.Models;
 using certificate_retrieval_be.Models.Dto;
 using certificate_retrieval_be.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using certificate_retrieval_be.Utility;
 
 namespace certificate_retrieval_be.Controllers
 {
@@ -20,6 +22,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllCertificates(int? userID = null, string? searchString = null)
         {
             try
@@ -60,6 +63,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{certificateID}")]
+        [Authorize]
         public async Task<IActionResult> GetCertificateById(string certificateID, int? userID = null)
         {
             try
@@ -117,6 +121,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> PostCertificate([FromForm] CertificatesDTO certificateDTO)
         {
             try
@@ -182,6 +187,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> UpdateCertificate(string id, [FromForm] CertificatesDTO certificateDTO)
         {
             id = Uri.UnescapeDataString(id);
@@ -249,6 +255,7 @@ namespace certificate_retrieval_be.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<ActionResult<ApiResponse>> DeleteCertificate(string id)
         {
             try

@@ -147,7 +147,7 @@ const DiplomaInfo = () => {
               <div className="mt-3 mb-3">
                 <img
                   src={imageToDisplay}
-                  style={{ width: "100%", borderRadius: "30px" }}
+                  style={{ width: "100%", borderRadius: "10px" }}
                   alt=""
                 />
               </div>

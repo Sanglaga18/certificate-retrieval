@@ -1,5 +1,7 @@
 ﻿using certificate_retrieval_be.Interfaces;
 using certificate_retrieval_be.Models;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -20,6 +22,7 @@ namespace certificate_retrieval_be.Controllers
 
         // GET: api/diploma-register
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -40,6 +43,7 @@ namespace certificate_retrieval_be.Controllers
 
         // GET: api/diploma-register/{id}
         [HttpGet("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -68,6 +72,7 @@ namespace certificate_retrieval_be.Controllers
 
         // POST: api/diploma-register
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Post([FromBody] DiplomaRegister model)
         {
             try
@@ -96,6 +101,7 @@ namespace certificate_retrieval_be.Controllers
 
         // PUT: api/diploma-register/{id}
         [HttpPut("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Put(int id, [FromBody] DiplomaRegister model)
         {
             try
@@ -132,6 +138,7 @@ namespace certificate_retrieval_be.Controllers
 
         // DELETE: api/diploma-register/{id}
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> Delete(int id)
         {
             try

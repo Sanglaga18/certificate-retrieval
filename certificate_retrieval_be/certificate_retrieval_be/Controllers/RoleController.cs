@@ -1,6 +1,8 @@
 ﻿using certificate_retrieval_be.Data;
 using certificate_retrieval_be.Models;
 using certificate_retrieval_be.Models.Dto;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -18,7 +20,9 @@ namespace certificate_retrieval_be.Controllers
             _db = db;
             _response = new ApiResponse();
         }
+
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetRoles()
         {
             _response.Result = _db.Roles;
@@ -27,6 +31,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetRole")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetRole(int id)
         {
             if (id == 0)
@@ -48,6 +53,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<ActionResult<ApiResponse>> CreateRole([FromBody] RoleCreateDTO roleCreateDTO)
         {
             try
@@ -78,6 +84,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<ActionResult<ApiResponse>> UpdateRole(int id, [FromBody] RoleUpdateDTO roleUpdateDTO)
         {
             try
@@ -122,6 +129,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<ActionResult<ApiResponse>> DeleteRole(int id)
         {
             try

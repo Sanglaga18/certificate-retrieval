@@ -3,6 +3,13 @@ const diplomaApi = createApi({
   reducerPath: "diplomaApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URL,
+    prepareHeaders: (headers: Headers) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        headers.append("Authorization", "Bearer " + token);
+      }
+      return headers;
+    },
   }),
   tagTypes: ["Diploma"],
   endpoints: (builder) => ({

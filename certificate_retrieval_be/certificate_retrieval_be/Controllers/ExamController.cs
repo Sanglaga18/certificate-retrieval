@@ -1,5 +1,7 @@
 ﻿using certificate_retrieval_be.Interfaces;
 using certificate_retrieval_be.Models;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -20,6 +22,7 @@ namespace certificate_retrieval_be.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetExams()
         {
             try
@@ -39,6 +42,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetExam(int id)
         {
             try
@@ -66,6 +70,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> CreateExam([FromBody] Exams exam)
         {
             try
@@ -93,6 +98,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> UpdateExam(int id, [FromBody] Exams exam)
         {
             try
@@ -128,6 +134,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> DeleteExam(int id)
         {
             try

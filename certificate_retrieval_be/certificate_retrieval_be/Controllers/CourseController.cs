@@ -1,5 +1,7 @@
 ﻿using certificate_retrieval_be.Interfaces;
 using certificate_retrieval_be.Models;
+using certificate_retrieval_be.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -19,6 +21,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetCourses()
         {
             try
@@ -38,6 +41,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> GetCourse(int id)
         {
             try
@@ -65,6 +69,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> AddCourse([FromBody] Courses course)
         {
             try
@@ -92,6 +97,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> UpdateCourse(int id, [FromBody] Courses course)
         {
             try
@@ -127,6 +133,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> DeleteCourse(int id)
         {
             try

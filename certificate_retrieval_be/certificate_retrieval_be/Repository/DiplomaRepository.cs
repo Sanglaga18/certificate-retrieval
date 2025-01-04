@@ -165,7 +165,7 @@ namespace certificate_retrieval_be.Repository
 
         public async Task<bool> DiplomaRegisterExists(int diplomaRegisterId)
         {
-            return await _db.Diplomas.AnyAsync(dr => dr.DiplomaRegisterID == diplomaRegisterId);
+            return await _db.DiplomaRegisters.AnyAsync(dr => dr.DiplomaRegisterID == diplomaRegisterId);
         }
 
         // Hàm tiện ích để chuẩn hóa tên container và file
