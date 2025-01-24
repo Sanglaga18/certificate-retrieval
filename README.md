@@ -11,6 +11,7 @@ To run the backend source code, follow these steps:
 1. **Create a `.env` file**  
    After cloning the project, create a `.env` file in the root directory of the backend project (at the same level as the `appsettings.json` file) and add the following content:
 
+   ```
    # Connection strings
 
    DEFAULT_DB_CONNECTION=Server=YOUR_SERVER_NAME;Database=YOUR_DATABASE_NAME;TrustServerCertificate=True;Trusted_Connection=True;
@@ -25,6 +26,7 @@ To run the backend source code, follow these steps:
    # API Secret Key
 
    API_SECRET=YOUR_SECRET_KEY
+   ```
 
 2. **Notes:**
 
@@ -40,9 +42,11 @@ To run the backend source code, follow these steps:
 
    - Open a terminal, navigate to the backend source folder, and run the following commands in sequence:
 
+     ``` 
      dotnet restore
      dotnet build
      dotnet run
+     ```
 
    - If you are using Visual Studio, open the solution file (.sln) and press F5 to run the project.
 
@@ -55,11 +59,11 @@ To set up and run the frontend source code, follow these steps:
 1. **Install Dependencies**  
    Run the following command in the project directory to install all necessary packages:
 
-   npm install
+   `npm install`
 
 2. **Start the Development Server**
    Use this command to start the development server:
 
-   npm run dev
+   `npm run dev`
 
    The application should now be running locally. Open your browser and navigate to the URL displayed in the terminal.
