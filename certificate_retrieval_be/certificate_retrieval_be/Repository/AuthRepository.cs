@@ -65,8 +65,8 @@ namespace certificate_retrieval_be.Repository
                     Email = model.Email,
                     Phone = model.Phone,
                     DateOfBirth = model.DateOfBirth,
-                    RoleID = model.RoleID,
-                    IsActive = model.IsActive,
+                    RoleID = 1,
+                    IsActive = false,
                 };
 
                 _db.Users.Add(newUser);

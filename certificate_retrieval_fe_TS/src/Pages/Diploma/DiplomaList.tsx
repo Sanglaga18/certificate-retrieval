@@ -5,6 +5,7 @@ import { useGetDiplomaQuery } from "../../Apis/diplomaApi";
 import { withAdminAuth } from "../../HOC";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
+import { format } from "date-fns";
 
 function DiplomaList() {
   const userData: userModel = useSelector(
@@ -56,7 +57,8 @@ function DiplomaList() {
                   <div className="col">{diploma.registryNumber}</div>
                   <div className="col">{diploma.diplomaName}</div>
                   <div className="col">
-                    {new Date(diploma.issueDate).toLocaleDateString()}
+                    {diploma.issueDate &&
+                      format(new Date(diploma.issueDate), "dd/MM/yyyy")}
                   </div>
                   <div className="col">
                     {diploma.isValid === true ? "Còn hiệu lực" : "Hết hiệu lực"}

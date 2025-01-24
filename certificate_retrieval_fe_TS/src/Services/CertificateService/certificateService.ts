@@ -8,13 +8,14 @@ import {
   useUpdateCertificateMutation,
 } from "../../Apis/certificateApi";
 import { format } from "date-fns";
-import { useGetStudentInfoByEnrollmentIdQuery } from "../../Apis/enrollmentApi";
 import { apiResponse } from "../../Interfaces";
 import { useDispatch } from "react-redux";
 import {
   clearCertificateID,
   setCertificateID,
 } from "../../Storage/Redux/certificateSlice";
+
+import { useFetchStudentInfoByEnrollmentID } from "../StudentInfoService/studentInfoService";
 
 const certificateData = {
   certificateID: "",
@@ -26,36 +27,6 @@ const certificateData = {
   issuingOrganization: "",
   enrollmentID: "",
   description: "",
-};
-
-// Custom hook xử lý logic lấy thông tin học viên
-const useFetchStudentInfo = (enrollmentID: string | null) => {
-  const [studentInfo, setStudentInfo] = useState<any>(null);
-
-  // Sử dụng query API khi enrollmentID có giá trị
-  const {
-    data: studentData,
-    isLoading,
-    isError,
-  } = useGetStudentInfoByEnrollmentIdQuery(enrollmentID);
-
-  // Cập nhật state khi API trả về dữ liệu
-  useEffect(() => {
-    if (isError) {
-      setStudentInfo(null);
-    } else if (enrollmentID) {
-      // Kiểm tra nếu không có dữ liệu, reset thông tin học viên
-      if (studentData?.result) {
-        setStudentInfo(studentData.result);
-      } else {
-        setStudentInfo(null);
-      }
-    } else {
-      setStudentInfo(null);
-    }
-  }, [enrollmentID, studentData, isError]);
-
-  return { studentInfo, isLoading, isError };
 };
 
 export const useCertificateService = (id?: string, data?: any) => {
@@ -72,7 +43,7 @@ export const useCertificateService = (id?: string, data?: any) => {
   const [enrollmentID, setEnrollmentID] = useState<string | null>(null);
 
   // Hook lấy thông tin học viên
-  const { studentInfo } = useFetchStudentInfo(enrollmentID);
+  const { studentInfo } = useFetchStudentInfoByEnrollmentID(enrollmentID);
 
   // Hooks API
   const [deleteCertificate] = useDeleteCertificateMutation();
@@ -149,6 +120,13 @@ export const useCertificateService = (id?: string, data?: any) => {
     }
   };
 
+  // Hàm kiểm tra chuỗi có chứa ký tự có dấu
+  const hasDiacritics = (text: string): boolean => {
+    const diacriticsRegex =
+      /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+    return diacriticsRegex.test(text);
+  };
+
   // Xử lý submit (Thêm/Sửa)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -156,6 +134,18 @@ export const useCertificateService = (id?: string, data?: any) => {
 
     if (!imageToStore && !id) {
       toastNotify("Vui lòng chọn hình chứng nhận", "error");
+      setLoading(false);
+      return;
+    }
+
+    if (hasDiacritics(certificateInputs.certificateID)) {
+      toastNotify("Số hiệu chứng nhận không được chứa ký tự có dấu", "error");
+      setLoading(false);
+      return;
+    }
+
+    if (hasDiacritics(certificateInputs.registryNumber)) {
+      toastNotify("Số vào sổ lưu không được chứa ký tự có dấu", "error");
       setLoading(false);
       return;
     }
@@ -216,7 +206,7 @@ export const useCertificateService = (id?: string, data?: any) => {
 
   const handleNavigate = async (id: string | undefined) => {
     if (id) {
-      console.log(id);
+      //console.log(id);
       dispatch(setCertificateID(id));
       navigate("/certificate/certificateUpsert/" + encodeSpecialChars(id));
     } else {

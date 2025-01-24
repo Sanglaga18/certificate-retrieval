@@ -4,6 +4,7 @@ import { useGetExamQuery } from "../../Apis/examApi";
 import { useNavigate } from "react-router";
 import { useExamService } from "../../Services";
 import { withAdminAuth } from "../../HOC";
+import { format } from "date-fns";
 
 function ExamList() {
   const { data, isLoading } = useGetExamQuery(null);
@@ -37,7 +38,8 @@ function ExamList() {
                   <div className="col-1">{exam.examID}</div>
                   <div className="col-5">{exam.examName}</div>
                   <div className="col">
-                    {new Date(exam.examDate).toLocaleDateString()}
+                    {exam.examDate &&
+                      format(new Date(exam.examDate), "dd/MM/yyyy")}
                   </div>
                   <div className="col">
                     <button className="btn btn-success">

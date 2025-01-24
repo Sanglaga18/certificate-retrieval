@@ -3,7 +3,6 @@ import {
   useDeleteEnrollmentMutation,
   useCreateEnrollmentMutation,
   useUpdateEnrollmentMutation,
-  useGetStudentInfoByEnrollmentIdQuery,
 } from "../../Apis/enrollmentApi";
 import { inputHelper } from "../../Helper";
 import { toastNotify } from "../../Helper";
@@ -34,7 +33,6 @@ export const useEnrollmentService = (id?: string, data?: any) => {
   const [deleteEnrollment] = useDeleteEnrollmentMutation();
   const [createEnrollment] = useCreateEnrollmentMutation();
   const [updateEnrollment] = useUpdateEnrollmentMutation();
-  const { data: studentData } = useGetStudentInfoByEnrollmentIdQuery(id);
 
   //Load dữ liệu khi có ID và data
   useEffect(() => {
@@ -119,7 +117,6 @@ export const useEnrollmentService = (id?: string, data?: any) => {
   return {
     enrollmentInputs,
     loading,
-    studentData,
     handleEnrollmentInput,
     handleSubmit,
     handleDelete,

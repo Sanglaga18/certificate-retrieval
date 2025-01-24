@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { inputHelper } from "../../Helper";
 import { toastNotify } from "../../Helper";
 import { useNavigate } from "react-router-dom";
-import { apiResponse } from "../Interfaces";
+import { apiResponse } from "../../Interfaces";
 import {
   useCreateDiplomaMutation,
   useDeleteDiplomaMutation,
   useUpdateDiplomaMutation,
 } from "../../Apis/diplomaApi";
 import { format } from "date-fns";
-import { useGetStudentInfoByExamResultIdQuery } from "../../Apis/examResultApi";
 import {
   clearDiplomaNumber,
   setDiplomaNumber,
 } from "../../Storage/Redux/diplomaSlice";
 import { useDispatch } from "react-redux";
+import { useFetchStudentInfoByExamResultID } from "../StudentInfoService/studentInfoService";
 
 const diplomaData = {
   diplomaNumber: "",
@@ -26,36 +26,6 @@ const diplomaData = {
   issuingOrganization: "",
   examResultID: "",
   description: "",
-};
-
-// Custom hook xử lý logic lấy thông tin học viên
-const useFetchStudentInfo = (examResultID: string | null) => {
-  const [studentInfo, setStudentInfo] = useState<any>(null);
-
-  // Sử dụng query API khi examResultID có giá trị
-  const {
-    data: studentData,
-    isLoading,
-    isError,
-  } = useGetStudentInfoByExamResultIdQuery(examResultID);
-
-  // Cập nhật state khi API trả về dữ liệu
-  useEffect(() => {
-    if (isError) {
-      setStudentInfo(null);
-    } else if (examResultID) {
-      // Kiểm tra nếu không có dữ liệu, reset thông tin học viên
-      if (studentData?.result) {
-        setStudentInfo(studentData.result);
-      } else {
-        setStudentInfo(null);
-      }
-    } else {
-      setStudentInfo(null);
-    }
-  }, [examResultID, studentData, isError]);
-
-  return { studentInfo, isLoading, isError };
 };
 
 export const useDiplomaService = (id?: string, data?: any) => {
@@ -72,7 +42,7 @@ export const useDiplomaService = (id?: string, data?: any) => {
   const [examResultID, setExamResultID] = useState<string | null>(null);
 
   // Hook lấy thông tin học viên
-  const { studentInfo } = useFetchStudentInfo(examResultID);
+  const { studentInfo } = useFetchStudentInfoByExamResultID(examResultID);
 
   // Hooks API
   const [deleteDiploma] = useDeleteDiplomaMutation();
@@ -151,6 +121,13 @@ export const useDiplomaService = (id?: string, data?: any) => {
     }
   };
 
+  // Hàm kiểm tra chuỗi có chứa ký tự có dấu
+  const hasDiacritics = (text: string): boolean => {
+    const diacriticsRegex =
+      /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+    return diacriticsRegex.test(text);
+  };
+
   // Xử lý submit (Thêm/Sửa)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -158,6 +135,18 @@ export const useDiplomaService = (id?: string, data?: any) => {
 
     if (!imageToStore && !id) {
       toastNotify("Vui lòng chọn hình chứng chỉ", "error");
+      setLoading(false);
+      return;
+    }
+
+    if (hasDiacritics(diplomaInputs.diplomaNumber)) {
+      toastNotify("Số hiệu chứng chỉ không được chứa ký tự có dấu", "error");
+      setLoading(false);
+      return;
+    }
+
+    if (hasDiacritics(diplomaInputs.registryNumber)) {
+      toastNotify("Số vào sổ lưu không được chứa ký tự có dấu", "error");
       setLoading(false);
       return;
     }
@@ -216,7 +205,7 @@ export const useDiplomaService = (id?: string, data?: any) => {
 
   const handleNavigate = async (id: string | undefined) => {
     if (id) {
-      console.log(id);
+      //console.log(id);
       dispatch(setDiplomaNumber(id));
       navigate("/diploma/diplomaUpsert/" + encodeSpecialChars(id));
     } else {
@@ -247,6 +236,5 @@ export const useDiplomaService = (id?: string, data?: any) => {
     handleSubmit,
     handleNavigate,
     handleDelete,
-    useFetchStudentInfo,
   };
 };

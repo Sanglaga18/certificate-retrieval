@@ -12,5 +12,6 @@ namespace certificate_retrieval_be.Interfaces
         Task<Users> Update(int id, UserUpdateDTO userDto);
         Task<bool> ResetPassword(int id);
         Task<bool> ChangePassword(int id, ChangePasswordDTO changePasswordDto);
+        Task<Users> UpdateSelf(UserSelfUpdateDTO userDto);
     }
 }

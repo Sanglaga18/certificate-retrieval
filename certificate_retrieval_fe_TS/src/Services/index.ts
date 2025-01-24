@@ -11,6 +11,10 @@ import { useStudentService } from "./StudentService/studentService";
 import { useLoginService } from "./LoginService/loginService";
 import { useHomeService } from "./HomeService/homeService";
 import { useRegisterService } from "./RegisterService/registerService";
+import {
+  useFetchStudentInfoByEnrollmentID,
+  useFetchStudentInfoByExamResultID,
+} from "./StudentInfoService/studentInfoService";
 
 export {
   useDiplomaRegisterService,
@@ -26,4 +30,6 @@ export {
   useLoginService,
   useHomeService,
   useRegisterService,
+  useFetchStudentInfoByEnrollmentID,
+  useFetchStudentInfoByExamResultID,
 };

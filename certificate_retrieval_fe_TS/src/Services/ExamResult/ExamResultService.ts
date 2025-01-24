@@ -3,7 +3,6 @@ import {
   useDeleteExamResultMutation,
   useCreateExamResultMutation,
   useUpdateExamResultMutation,
-  useGetStudentInfoByExamResultIdQuery,
 } from "../../Apis/examResultApi";
 import { inputHelper } from "../../Helper";
 import { toastNotify } from "../../Helper";
@@ -33,7 +32,6 @@ export const useExamResultService = (id?: string, data?: any) => {
   const [deleteExamResult] = useDeleteExamResultMutation();
   const [createExamResult] = useCreateExamResultMutation();
   const [updateExamResult] = useUpdateExamResultMutation();
-  const { data: studentData } = useGetStudentInfoByExamResultIdQuery(id);
 
   //Load dữ liệu khi có ID và data
   useEffect(() => {
@@ -114,7 +112,6 @@ export const useExamResultService = (id?: string, data?: any) => {
   return {
     examResultInputs,
     loading,
-    studentData,
     handleExamResultInput,
     handleSubmit,
     handleDelete,

@@ -4,6 +4,7 @@ import { useGetCourseQuery } from "../../Apis/courseApi";
 import { useNavigate } from "react-router";
 import { useCourseService } from "../../Services";
 import { withAdminAuth } from "../../HOC";
+import { format } from "date-fns";
 
 function CourseList() {
   const { data, isLoading } = useGetCourseQuery(null);
@@ -38,10 +39,12 @@ function CourseList() {
                   <div className="col-1">{course.courseID}</div>
                   <div className="col">{course.courseName}</div>
                   <div className="col">
-                    {new Date(course.startDate).toLocaleDateString()}
+                    {course.startDate &&
+                      format(new Date(course.startDate), "dd/MM/yyyy")}
                   </div>
                   <div className="col">
-                    {new Date(course.endDate).toLocaleDateString()}
+                    {course.endDate &&
+                      format(new Date(course.endDate), "dd/MM/yyyy")}
                   </div>
                   <div className="col">
                     <button className="btn btn-success">

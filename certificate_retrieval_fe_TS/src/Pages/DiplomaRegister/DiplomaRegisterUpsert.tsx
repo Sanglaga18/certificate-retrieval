@@ -3,12 +3,13 @@ import { useGetDiplomaRegisterByIdQuery } from "../../Apis/diplomaRegisterApi";
 import { MainLoader } from "../../Components/Page/Common";
 import { useDiplomaRegisterService } from "../../Services";
 import { withAdminAuth } from "../../HOC";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const DiplomaRegisterUpsert = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useGetDiplomaRegisterByIdQuery(id);
+  const { data } = useGetDiplomaRegisterByIdQuery(id ?? skipToken);
 
   const {
     diplomaRegisterInputs,

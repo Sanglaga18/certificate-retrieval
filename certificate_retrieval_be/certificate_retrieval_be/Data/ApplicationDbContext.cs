@@ -1,5 +1,4 @@
-﻿
-using certificate_retrieval_be.Models;
+﻿using certificate_retrieval_be.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +36,7 @@ namespace certificate_retrieval_be.Data
                 new Roles { RoleID = 3, RoleName = "Teacher" },
                 new Roles { RoleID = 4, RoleName = "Staff" }
             );
+
         }
     }
 }

@@ -40,7 +40,7 @@ export const useStudentService = (id?: string, data?: any) => {
         backIdCard: data.result.backIdCard,
       };
       setStudentInputs(tempData);
-      console.log(tempData);
+      //console.log(tempData);
       setImageToDisplay(data.result.image);
       setFrontIdCardToDisplay(data.result.frontIdCard);
       setBackIdCardToDisplay(data.result.backIdCard);

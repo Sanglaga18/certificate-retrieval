@@ -4,12 +4,13 @@ import { MainLoader } from "../../Components/Page/Common";
 import { useEnrollmentService } from "../../Services";
 import { format } from "date-fns";
 import { withAdminAuth } from "../../HOC";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const EnrollmentUpsert = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useGetEnrollmentByIdQuery(id);
+  const { data } = useGetEnrollmentByIdQuery(id ?? skipToken);
 
   const { enrollmentInputs, loading, handleEnrollmentInput, handleSubmit } =
     useEnrollmentService(id, data);

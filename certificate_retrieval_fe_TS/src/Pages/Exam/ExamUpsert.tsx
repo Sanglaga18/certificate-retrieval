@@ -4,12 +4,13 @@ import { MainLoader } from "../../Components/Page/Common";
 import { useExamService } from "../../Services";
 import { format } from "date-fns";
 import { withAdminAuth } from "../../HOC";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const ExamUpsert = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useGetExamByIdQuery(id);
+  const { data } = useGetExamByIdQuery(id ?? skipToken);
 
   const { examInputs, loading, handleExamInput, handleSubmit } = useExamService(
     id,

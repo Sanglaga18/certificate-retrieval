@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { useGetExamResultByIdQuery } from "../../Apis/examResultApi";
 import { MainLoader } from "../../Components/Page/Common";
 import { useExamResultService } from "../../Services";
@@ -8,7 +9,7 @@ const ExamResultUpsert = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useGetExamResultByIdQuery(id);
+  const { data } = useGetExamResultByIdQuery(id ?? skipToken);
 
   const { examResultInputs, loading, handleExamResultInput, handleSubmit } =
     useExamResultService(id, data);

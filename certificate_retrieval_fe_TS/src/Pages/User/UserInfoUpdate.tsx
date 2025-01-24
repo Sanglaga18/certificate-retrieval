@@ -25,9 +25,7 @@ const UserInfoUpdate = () => {
       {loading && <MainLoader />}
 
       <div className="card shadow border p-4">
-        <h3 className="text-center text-primary mb-4">
-          Sửa thông tin người dùng
-        </h3>
+        <h3 className="text-center text-primary mb-4">Sửa thông tin cá nhân</h3>
 
         <form method="post" onSubmit={handleInfoUpdateSubmit}>
           <div className="row justify-content-center">

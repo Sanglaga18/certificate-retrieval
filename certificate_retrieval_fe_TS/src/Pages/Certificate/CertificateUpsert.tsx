@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MainLoader } from "../../Components/Page/Common";
 import { useCertificateService } from "../../Services";
 import { format } from "date-fns";
@@ -7,6 +7,7 @@ import { withAdminAuth } from "../../HOC";
 import { userModel } from "../../Interfaces";
 import { RootState } from "../../Storage/Redux/store";
 import { useSelector } from "react-redux";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const CertificateUpsert = () => {
   const userData: userModel = useSelector(
@@ -28,10 +29,9 @@ const CertificateUpsert = () => {
 
   const navigate = useNavigate();
 
-  const { data } = useGetCertificateByIdQuery({
-    id: encodedId,
-    userID: userData.id,
-  });
+  const { data } = useGetCertificateByIdQuery(
+    encodedId ? { id: encodedId, userID: userData.id } : skipToken
+  );
   //console.log(data);
 
   const {

@@ -3,12 +3,13 @@ import { useGetCertificateRegisterByIdQuery } from "../../Apis/certificateRegist
 import { MainLoader } from "../../Components/Page/Common";
 import { useCertificateRegisterService } from "../../Services";
 import { withAdminAuth } from "../../HOC";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const CertificateRegisterUpsert = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useGetCertificateRegisterByIdQuery(id);
+  const { data } = useGetCertificateRegisterByIdQuery(id ?? skipToken);
 
   const {
     certificateRegisterInputs,

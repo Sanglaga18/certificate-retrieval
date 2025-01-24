@@ -89,6 +89,27 @@ namespace certificate_retrieval_be.Repository
             return existingUser;
         }
 
+        public async Task<Users> UpdateSelf(UserSelfUpdateDTO userDto)
+        {
+            var existingUser = await _db.Users.FindAsync(userDto.UserID);
+            if (existingUser == null)
+            {
+                throw new Exception($"Người dùng với mã '{userDto.UserID}' không tồn tại.");
+            }
+
+            // Cập nhật thông tin
+            existingUser.FullName = userDto.FullName;
+            existingUser.Email = userDto.Email;
+            existingUser.Phone = userDto.Phone;
+            existingUser.DateOfBirth = userDto.DateOfBirth;
+
+            _db.Users.Update(existingUser);
+            await _db.SaveChangesAsync();
+
+            return existingUser;
+        }
+
+
         public async Task<bool> ResetPassword(int id)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.UserID == id);

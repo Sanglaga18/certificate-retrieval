@@ -21,7 +21,7 @@ const DiplomaInfo = () => {
   //   (state: RootState) => state.diplomaStore.diplomaNumber
   // );
   const { id } = useParams();
-  console.log(id);
+  //console.log(id);
   const encodedId = id ? encodeSpecialChars(id) : undefined;
   const navigate = useNavigate();
 

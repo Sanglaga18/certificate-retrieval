@@ -54,8 +54,8 @@ export const useCourseService = (id?: string, data?: any) => {
         startDate: parseISO(data.result.startDate), // Sử dụng parseISO để chuyển đổi string thành Date
         endDate: parseISO(data.result.endDate),
       };
-      console.log(tempData.startDate);
-      console.log(tempData.endDate);
+      //console.log(tempData.startDate);
+      //console.log(tempData.endDate);
       setCourseInputs(tempData);
     }
   }, [data]);

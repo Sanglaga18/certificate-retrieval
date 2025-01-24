@@ -4,12 +4,13 @@ import { MainLoader } from "../../Components/Page/Common";
 import { useCourseService } from "../../Services";
 import { format } from "date-fns";
 import { withAdminAuth } from "../../HOC";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const CourseUpsert = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useGetCourseByIdQuery(id);
+  const { data } = useGetCourseByIdQuery(id ?? skipToken);
 
   const { courseInputs, loading, handleCourseInput, handleSubmit } =
     useCourseService(id, data);

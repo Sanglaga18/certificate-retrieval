@@ -3,6 +3,7 @@ import {
   useChangePasswordMutation,
   useCreateUserMutation,
   useResetPasswordMutation,
+  useUpdateSelfMutation,
   useUpdateUserMutation,
 } from "../../Apis/userApi";
 import { inputHelper } from "../../Helper";
@@ -41,6 +42,7 @@ export const useUserService = (id?: string, data?: any) => {
   // Hooks API
   const [createUser] = useCreateUserMutation();
   const [updateUser] = useUpdateUserMutation();
+  const [updateSelf] = useUpdateSelfMutation();
   const [resetPassword] = useResetPasswordMutation();
   const [changePassword] = useChangePasswordMutation();
 
@@ -116,9 +118,9 @@ export const useUserService = (id?: string, data?: any) => {
     };
     //console.log(requestData);
     // Cập nhật
-    const response: apiResponse = await updateUser({ data: requestData, id });
+    const response: apiResponse = await updateSelf({ data: requestData, id });
     if (response.data) {
-      toastNotify("Cập nhật thông tin người dùng thành công", "success");
+      toastNotify("Cập nhật thông tin cá nhân thành công", "success");
       setLoading(false);
       navigate("/user/userInfo/");
     } else if (response.error) {

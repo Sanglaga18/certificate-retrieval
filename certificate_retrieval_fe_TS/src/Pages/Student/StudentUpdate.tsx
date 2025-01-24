@@ -6,7 +6,7 @@ import { withAdminAuth } from "../../HOC";
 
 const StudentUpdate = () => {
   const { id } = useParams();
-  console.log(id);
+  //console.log(id);
 
   const navigate = useNavigate();
 

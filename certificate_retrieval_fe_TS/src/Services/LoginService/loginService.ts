@@ -36,7 +36,7 @@ export const useLoginService = () => {
     });
 
     if (response.data) {
-      console.log(response.data);
+      //console.log(response.data);
       const { token } = response.data.result;
       const { fullName, id, email, role, isActive }: userModel =
         jwt_decode(token);
@@ -44,7 +44,7 @@ export const useLoginService = () => {
       dispatch(setLoggedInUser({ fullName, id, email, role, isActive }));
       navigate("/");
     } else if (response.error) {
-      console.log(response.error.data.errorMessages[0]);
+      //console.log(response.error.data.errorMessages[0]);
       setError(response.error.data.errorMessages[0]);
     }
 

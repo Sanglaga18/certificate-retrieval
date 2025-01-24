@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MainLoader } from "../../Components/Page/Common";
 import { useDiplomaService } from "../../Services";
 import { format } from "date-fns";
@@ -7,6 +7,7 @@ import { withAdminAuth } from "../../HOC";
 import { userModel } from "../../Interfaces";
 import { RootState } from "../../Storage/Redux/store";
 import { useSelector } from "react-redux";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const DiplomaUpsert = () => {
   const userData: userModel = useSelector(
@@ -25,10 +26,9 @@ const DiplomaUpsert = () => {
 
   const navigate = useNavigate();
 
-  const { data } = useGetDiplomaByIdQuery({
-    id: encodedId,
-    userID: userData.id,
-  });
+  const { data } = useGetDiplomaByIdQuery(
+    encodedId ? { id: encodedId, userID: userData.id } : skipToken
+  );
 
   const {
     diplomaInputs,

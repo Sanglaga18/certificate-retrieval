@@ -4,6 +4,7 @@ import { useGetEnrollmentQuery } from "../../Apis/enrollmentApi";
 import { useNavigate } from "react-router";
 import { useEnrollmentService } from "../../Services";
 import { withAdminAuth } from "../../HOC";
+import { format } from "date-fns";
 
 function EnrollmentList() {
   const { data, isLoading } = useGetEnrollmentQuery(null);
@@ -40,7 +41,8 @@ function EnrollmentList() {
                   <div className="col">{enrollment.studentID}</div>
                   <div className="col">{enrollment.courseID}</div>
                   <div className="col">
-                    {new Date(enrollment.enrollmentDate).toLocaleDateString()}
+                    {enrollment.enrollmentDate &&
+                      format(new Date(enrollment.enrollmentDate), "dd/MM/yyyy")}
                   </div>
                   <div className="col">{enrollment.finalTestScore}</div>
                   <div className="col">

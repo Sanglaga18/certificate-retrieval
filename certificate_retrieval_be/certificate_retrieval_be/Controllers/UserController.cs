@@ -44,7 +44,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpGet("{userID}")]
-        [Authorize(Roles = SD.Role_Staff)]
+        [Authorize]
         public async Task<IActionResult> GetUserById(int userID)
         {
             try
@@ -134,6 +134,27 @@ namespace certificate_retrieval_be.Controllers
             }
         }
 
+        [HttpPut("self/{id}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateSelf(int id, [FromBody] UserSelfUpdateDTO userSelfUpdateDTO)
+        {
+            try
+            {
+                var updatedUser = await _userRepository.UpdateSelf(userSelfUpdateDTO);
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.Result = updatedUser;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.Message };
+                return StatusCode((int)HttpStatusCode.InternalServerError, _response);
+            }
+        }
+
+
         [HttpPut("resetpassword/{id}")]
         [Authorize(Roles = SD.Role_Staff)]
         public async Task<IActionResult> ResetPassword(int id)
@@ -173,7 +194,7 @@ namespace certificate_retrieval_be.Controllers
         }
 
         [HttpPut("changepassword/{id}")]
-        [Authorize(Roles = SD.Role_Staff)]
+        [Authorize]
         public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePasswordDTO changePasswordDTO)
         {
             try
